@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="Your name here">
+  <meta name="description" content="One week of #RunKeeper Tweets">
+  <!--Load JQuery-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--Load Vega-lite-->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.6.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@4.0.0-beta.8"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@5.1.3"></script>
+  <!--Load math.js-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/5.1.2/math.min.js"></script>
+  <!--Load bootstrap stylesheet-->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <!--Load local stylesheet-->
+  <link rel="stylesheet" href="css/style.css">
+  <!--Load local runkeeper_tweets file, which will load all of the tweets into the variable RUNKEEPER_TWEETS-->
+  <script type="text/javascript" src="js/get_saved_tweets.js"></script>
+  <!--Load local tweet.js file, which was generated from TypeScript-->
+  <script type="text/javascript" src="js/tweet.js"></script>
+  <!--Load local app.js file-->
+  <script type="text/javascript" src="js/activities.js"></script>
+  <title>One week of #RunKeeper Tweets</title>
+</head>
+<body class="container">
+  <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-primary">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item navbar-brand">
+        <span class="navbar-brand">
+          One week of #RunKeeper Tweets
+        </span>
+      </li>
+      <li class="nav-item">
+        <a href="index.html" class="nav-link">
+          About the data
+        </a>
+      </li>
+      <li class="nav-item active">
+        <a href="activities.html" class="nav-link">
+          A wide range of activities
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="descriptions.html" class="nav-link">
+          What people are saying
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <main>
+    <h1>A wide range of activities</h1>
+    <p>That week, people logged <span id="numberActivities">???</span> different types of activities with Runkeeper. People logged the most <span id="firstMost">???</span>, <span id="secondMost">???</span>, and <span id="thirdMost">???</span> activities.</p>
+    <div id="activityVis"></div>
+    <p>Of these three activities, people tended to <span id="longestActivityType">???</span> the longest distance and <span id="shortestActivityType">???</span> the shortest. People tended to do their longest activities on <span id="weekdayOrWeekendLonger">???</span>.</p>
+    <button id="aggregate" class="btn btn-primary">Show means</button>
+    <div id="distanceVis"></div>
+    <div id="distanceVisAggregated"></div>
+  </main>
+</body>
+</html>
