@@ -7,7 +7,9 @@ class Tweet {
 		this.time = new Date(tweet_time);//, "ddd MMM D HH:mm:ss Z YYYY"
 	}
 
-	//returns either 'live_event', 'achievement', 'completed_event', or 'miscellaneous'
+    /*
+        returns either 'live_event', 'achievement', 'completed_event', or 'miscellaneous'
+    */
     get source():string {
         let textLowerCase = this.text.toLowerCase();
         if( textLowerCase.includes('just completed') || textLowerCase.includes('just posted') ) {
@@ -24,7 +26,9 @@ class Tweet {
         //return "unknown";
     }
 
-    //returns a boolean, whether the text includes any content written by the person tweeting.
+    /*
+        //returns a boolean, whether the text includes any content written by the person tweeting.
+    */
     get written():boolean {
         //TODO: identify whether the tweet is written
         let textLowerCase = this.text.toLowerCase();
@@ -34,6 +38,9 @@ class Tweet {
         return false;
     }
 
+    /*
+        returns the user written text portion of the tweet
+    */
     get writtenText():string {
         if(!this.written) {
             return "";
@@ -42,7 +49,6 @@ class Tweet {
         //let userWrittenText = this.text.substr(0, this.text.indexOf(' - '));
         let userWrittenText = this.text.substr( this.text.indexOf(' - '), this.text.indexOf('https') );
         return userWrittenText;
-
         //return "";
     }
 
