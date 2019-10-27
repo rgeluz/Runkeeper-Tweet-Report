@@ -13,7 +13,8 @@ function parseTweets(runkeeper_tweets) {
 
 	//This line modifies the DOM, searching for the tag with the numberTweets ID and updating the text.
 	//It works correctly, your task is to update the text of the other tags in the HTML file!
-	$('#numberTweets').text(tweet_array.length);
+	var numberOfTweets = tweet_array.length;
+	$('#numberTweets').text(numberOfTweets);
 
 	//debug: verify contents in tweet_array. Use Chrome Dev Tools to view console output. This prints
 	/*
@@ -32,7 +33,7 @@ function parseTweets(runkeeper_tweets) {
 	//$('#lastDate').text('test 45678')
 	
 
-	//Tweet Dates
+	//Tweet Dates (1 point)
 	//Find the earliest and latest Tweets in the set, and then update the spans.
 	//Use Month, Day, and Year format exp: Monday, October 14, 2019
 	//for options use https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString
@@ -49,7 +50,32 @@ function parseTweets(runkeeper_tweets) {
 	$('#lastDate').text(firstTweetElement.time.toLocaleDateString('en-US',options));
 
 
-	
+	//Tweet Categories (1 point)
+	var completedEventCount = 0;
+	var liveEventCount = 0;
+	var achievementCount = 0;
+	var miscellaneousCount = 0;
+	tweet_array.forEach(element => {
+		if(element.source==="completed_event") { completedEventCount++; }
+		else if(element.source==="live_event") { liveEventCount++; }
+		else if(element.source==="achievement") { achievementCount++; }
+		else if(element.source==="miscellaneous") { miscellaneousCount++; }
+	});
+	$('.completedEvents').text(completedEventCount);
+	$('.liveEvents').text(liveEventCount);
+	$('.achievements').text(achievementCount);
+	$('.miscellaneous').text(miscellaneousCount);
+
+	var completedEventPct = (completedEventCount/numberOfTweets).toFixed(2);
+	var liveEventPct = (liveEventCount/numberOfTweets).toFixed(2);
+	var achievementPct = (achievementCount/numberOfTweets).toFixed(2);
+	var misscellaneousPct = (miscellaneousCount/numberOfTweets).toFixed(2);
+	$('.completedEventsPct').text(completedEventPct+"%");
+	$('.liveEventsPct').text(liveEventPct+"%");
+	$('.achievementsPct').text(achievementPct+"%");
+	$('.miscellaneousPct').text(misscellaneousPct+"%");
+
+	//User Written Tweets (1 pt)
 	
 }
 

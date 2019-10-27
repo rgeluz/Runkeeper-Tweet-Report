@@ -9,7 +9,19 @@ class Tweet {
 
 	//returns either 'live_event', 'achievement', 'completed_event', or 'miscellaneous'
     get source():string {
-        return "unknown";
+        let textLowerCase = this.text.toLowerCase();
+        if( textLowerCase.includes('just completed') || textLowerCase.includes('just posted') ) {
+            return "completed_event";
+        } else if ( textLowerCase.includes('right now') ) {
+            return "live_event";
+        } else if ( textLowerCase.includes('set a goal') ||
+                    textLowerCase.includes('met my') ||
+                    textLowerCase.includes('achieved') ) {
+            return "achievement";
+        } else {
+            return "miscellaneous"
+        }
+        //return "unknown";
     }
 
     //returns a boolean, whether the text includes any content written by the person tweeting.
