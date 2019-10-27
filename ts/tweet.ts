@@ -26,8 +26,12 @@ class Tweet {
 
     //returns a boolean, whether the text includes any content written by the person tweeting.
     get written():boolean {
-        return false;
         //TODO: identify whether the tweet is written
+        let textLowerCase = this.text.toLowerCase();
+        if( textLowerCase.includes(' - ') ) {
+            return true;
+        }
+        return false;
     }
 
     get writtenText():string {
@@ -35,7 +39,11 @@ class Tweet {
             return "";
         }
         //TODO: parse the written text from the tweet
-        return "";
+        //let userWrittenText = this.text.substr(0, this.text.indexOf(' - '));
+        let userWrittenText = this.text.substr( this.text.indexOf(' - '), this.text.indexOf('https') );
+        return userWrittenText;
+
+        //return "";
     }
 
     get activityType():string {

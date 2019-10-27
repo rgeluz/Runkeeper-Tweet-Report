@@ -51,6 +51,7 @@ function parseTweets(runkeeper_tweets) {
 
 
 	//Tweet Categories (1 point)
+	//The tweets can be divided into four categories:
 	var completedEventCount = 0;
 	var liveEventCount = 0;
 	var achievementCount = 0;
@@ -66,17 +67,28 @@ function parseTweets(runkeeper_tweets) {
 	$('.achievements').text(achievementCount);
 	$('.miscellaneous').text(miscellaneousCount);
 
-	var completedEventPct = (completedEventCount/numberOfTweets).toFixed(2);
-	var liveEventPct = (liveEventCount/numberOfTweets).toFixed(2);
-	var achievementPct = (achievementCount/numberOfTweets).toFixed(2);
-	var misscellaneousPct = (miscellaneousCount/numberOfTweets).toFixed(2);
+	var completedEventPct = ((completedEventCount/numberOfTweets)*100).toFixed(2);
+	var liveEventPct = ((liveEventCount/numberOfTweets)*100).toFixed(2);
+	var achievementPct = ((achievementCount/numberOfTweets)*100).toFixed(2);
+	var misscellaneousPct = ((miscellaneousCount/numberOfTweets)*100).toFixed(2);
 	$('.completedEventsPct').text(completedEventPct+"%");
 	$('.liveEventsPct').text(liveEventPct+"%");
 	$('.achievementsPct').text(achievementPct+"%");
 	$('.miscellaneousPct').text(misscellaneousPct+"%");
 
-	//User Written Tweets (1 pt)
-	
+	//User Written Tweets (1 point)
+	//Some of the Tweets in each category also contain text written by the user. 
+	var userWrittenTweetCount = 0;
+	tweet_array.forEach(element => {
+		 	if( element.written ) {
+				//console.log(element.writtenText );
+				userWrittenTweetCount++;
+			}
+	});		
+	var userWrittenTweetPct = ((userWrittenTweetCount/numberOfTweets)*100).toFixed(2);
+	$('.written').text(userWrittenTweetCount);
+	$('.writtenPct').text(userWrittenTweetPct+"%");
+
 }
 
 //Wait for the DOM to load
