@@ -1,4 +1,5 @@
 --Readme document for Roman Geluz --
+--Date started: 10/26/2019
 
 1. How many assignment points do you believe you completed (replace the *'s with your numbers)?
 
