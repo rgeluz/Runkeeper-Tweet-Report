@@ -1,10 +1,12 @@
 class Tweet {
 	private text:string;
-	time:Date;
+    time:Date;
+    created_At:string;
 
 	constructor(tweet_text:string, tweet_time:string) {
         this.text = tweet_text;
-		this.time = new Date(tweet_time);//, "ddd MMM D HH:mm:ss Z YYYY"
+        this.time = new Date(tweet_time);//, "ddd MMM D HH:mm:ss Z YYYY"
+        this.created_At = tweet_time;
 	}
 
     /*
@@ -129,6 +131,20 @@ class Tweet {
             return milesDecimal;
         }
         return 0;
+    }
+
+    get dayType():string {
+        if(this.created_At.includes( 'Sat ') || 
+           this.created_At.includes( 'Sun' )) {
+                return "weekend";
+        } else if (this.created_At.includes( 'Mon ') || 
+                this.created_At.includes( 'Tue ') ||
+                this.created_At.includes( 'Wed ') ||
+                this.created_At.includes( 'Thu ') ||
+                this.created_At.includes( 'Fri ') ) {
+                return "weekday";
+        }
+        return "";
     }
 
     getHTMLTableRow(rowNumber:number):string {
