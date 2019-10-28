@@ -58,16 +58,28 @@ class Tweet {
         }
         //TODO: parse the activity type from the text of the tweet
         let textLowerCase = this.text.toLowerCase();
-        if( textLowerCase.includes( ' run ' ) ) { return "running"; }
+        //need to differentiate between "run" and "ski run" to get accurate counts
+        if( textLowerCase.includes( ' run ' ) ) {  
+            if( !textLowerCase.includes( ' ski ' ) ) {
+                return "running"; 
+            } else if ( textLowerCase.includes('ski run ' )) {
+                return "skiing";
+            }
+        }
         else if( textLowerCase.includes( ' walk ' ) ) { return "walking"; }
-        else if( textLowerCase.includes( ' bike ' ) ) { return "biking"; }
-        else if( textLowerCase.includes( ' mtn bike ' ) ) { return "mountain biking"; }
+        //need to differentiate between "bike" and "mtn bike" to get accurate counts
+        else if( textLowerCase.includes( ' bike ' ) ) {           
+            if( !textLowerCase.includes( ' mtn ' )) {
+                return "biking"; 
+            } else if ( textLowerCase.includes( ' mtn bike ' )) {
+                return "mountain biking";
+            }
+        }
         else if( textLowerCase.includes( ' hike ' ) ) { return "hiking"; }
         else if( textLowerCase.includes( ' mi activity ' ) || 
                  textLowerCase.includes( ' km activity ' ) ) { return "activity"; }
         else if( textLowerCase.includes( ' swim ' ) ) { return "swimming"; }
         else if( textLowerCase.includes( ' chair ride ' ) ) { return "chair riding"; }
-        else if( textLowerCase.includes( ' ski run ' ) ) { return "skiing"; }
         else if( textLowerCase.includes( ' yoga ') ){ return "yoga"; }
 
         return "";
