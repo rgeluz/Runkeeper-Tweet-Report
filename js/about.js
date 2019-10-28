@@ -57,6 +57,8 @@ function parseTweets(runkeeper_tweets) {
 		tweet_array.forEach(element => {
 				if( element.written ) {
 					//console.log(element.writtenText );
+					//console.log(element.distance);
+					//console.log(element.activityType);
 					userWrittenTweetCount++;
 				}
 		});		

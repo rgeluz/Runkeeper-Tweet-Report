@@ -27,7 +27,7 @@ class Tweet {
     }
 
     /*
-        //returns a boolean, whether the text includes any content written by the person tweeting.
+        returns a boolean, whether the text includes any content written by the person tweeting.
     */
     get written():boolean {
         //TODO: identify whether the tweet is written
@@ -45,9 +45,9 @@ class Tweet {
         if(!this.written) {
             return "";
         }
-        //TODO: parse the written text from the tweet
+        //TODO: parse the written text from the tweet //TODO finish later
         //let userWrittenText = this.text.substr(0, this.text.indexOf(' - '));
-        let userWrittenText = this.text.substr( this.text.indexOf(' - '), this.text.indexOf('https') );
+        let userWrittenText = this.text.substring( this.text.indexOf(' - '), this.text.indexOf('https') );
         return userWrittenText;
         //return "";
     }
@@ -57,14 +57,65 @@ class Tweet {
             return "unknown";
         }
         //TODO: parse the activity type from the text of the tweet
+        let textLowerCase = this.text.toLowerCase();
+        if( textLowerCase.includes( ' run ' ) ) { return "running"; }
+        else if( textLowerCase.includes( ' walk ' ) ) { return "walking"; }
+        else if( textLowerCase.includes( ' bike ' ) ) { return "biking"; }
+        else if( textLowerCase.includes( ' mtn bike ' ) ) { return "mountain biking"; }
+        else if( textLowerCase.includes( ' hike ' ) ) { return "hiking"; }
+        else if( textLowerCase.includes( ' mi activity ' ) || 
+                 textLowerCase.includes( ' km activity ' ) ) { return "activity"; }
+        else if( textLowerCase.includes( ' swim ' ) ) { return "swimming"; }
+        else if( textLowerCase.includes( ' chair ride ' ) ) { return "chair riding"; }
+        else if( textLowerCase.includes( ' ski run ' ) ) { return "skiing"; }
+        else if( textLowerCase.includes( ' yoga ') ){ return "yoga"; }
+
         return "";
     }
 
+    /*
+        //tested regex pattern at https://regex101.com
+        regex: 
+            (?<= a )(.*?)(?= mi )
+            (?<=a )(.*?)(?= km )
+
+    */
     get distance():number {
         if(this.source != 'completed_event') {
             return 0;
         }
         //TODO: prase the distance from the text of the tweet
+        let distanceArray;
+        let distanceString: string ="";
+        if(this.text.includes( ' mi ' )) {
+            /**/distanceArray = this.text.match(/(?<= a )(.*?)(?= mi )/g);
+            if(distanceArray!=null) {
+                distanceArray.forEach(element => {
+                    if(element!=null){
+                        distanceString += element.toString();
+                    }
+                });
+            }
+            let miles = parseFloat(distanceString);
+            let milesString: string = miles.toFixed(2);
+            let milesDecimal = parseFloat(milesString);
+            return milesDecimal;
+        } else if (this.text.includes( ' km ' )) {
+            distanceArray = this.text.match(/(?<=a )(.*?)(?= km )/g);
+            if(distanceArray!=null) {
+                distanceArray.forEach(element => {
+                    if(element!=null){
+                        distanceString += element.toString();
+                    }
+                });
+            }
+            //convert kilometers to miles
+            let kilometers = parseFloat(distanceString);
+            let miles = kilometers/1.609;
+            let milesString: string = miles.toFixed(2);
+            let milesDecimal = parseFloat(milesString);
+            return milesDecimal;
+        }
         return 0;
     }
 
