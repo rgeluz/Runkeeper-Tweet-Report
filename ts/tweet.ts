@@ -135,7 +135,7 @@ class Tweet {
 
     get dayType():string {
         if(this.created_At.includes( 'Sat ') || 
-           this.created_At.includes( 'Sun' )) {
+           this.created_At.includes( 'Sun ' )) {
                 return "weekend";
         } else if (this.created_At.includes( 'Mon ') || 
                 this.created_At.includes( 'Tue ') ||
@@ -145,6 +145,26 @@ class Tweet {
                 return "weekday";
         }
         return "";
+    }
+
+    get day():string {
+        if(this.created_At.includes( 'Sat' )) {
+            return "Sat";
+        } else if(this.created_At.includes( 'Sun ' )) {
+            return "Sun";
+        } else if(this.created_At.includes( 'Mon ' )) {
+            return "Mon";
+        } else if(this.created_At.includes( 'Tue ' )) {
+            return "Tue";
+        } else if(this.created_At.includes( 'Wed ' )) {
+            return "Wed";
+        } else if(this.created_At.includes( 'Thu ' )) {
+            return "Thu";
+        } else if(this.created_At.includes( 'Fri ' )) {
+            return "Fri";
+        }  
+        return "";
+
     }
 
     getHTMLTableRow(rowNumber:number):string {
