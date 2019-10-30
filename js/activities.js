@@ -190,6 +190,10 @@ function parseTweets(runkeeper_tweets) {
 		console.log('people tend to do their longest activities on weekends');
 	}
 
+	/*
+		//vega-lite Plots for data visualization
+
+	*/
 
 
 	//create data for graphs below (vega-lite), just for the top three categories
@@ -214,13 +218,13 @@ function parseTweets(runkeeper_tweets) {
 	console.log('');
 
 
-
-
-	//vega-lite
+	
 	//first graph: A plot of how many of each type of activity exists in the dataset.
 	activity_vis_spec = {
 	  "$schema": "https://vega.github.io/schema/vega-lite/v4.0.0-beta.8.json",
-	  "description": "A graph of the number of Tweets containing each type of activity.",
+		"description": "A graph of the number of Tweets containing each type of activity.",
+		"width": 400,
+		"height": 200, 
 	  "data": {
 			//"values": tweet_array
 			"values": activityTypeArray
@@ -241,7 +245,9 @@ function parseTweets(runkeeper_tweets) {
 	//second graph: A plot of the distances by day of the week for all of the three most tweeted-about activities. 
 	distance_vis_spec = {
 		"$schema": "https://vega.github.io/schema/vega-lite/v4.0.0-beta.8.json",
-	  "description": "A graph of the number of Tweets containing each type of activity.",
+		"description": "A graph of the number of Tweets containing each type of activity.",
+		"width": 400,
+		"height": 200, 
 	  "data": {
 			//"values": tweet_array
 			"values": dayOfWeekArray
@@ -274,40 +280,65 @@ function parseTweets(runkeeper_tweets) {
 	//third graph: A plot of the distances by day of the week for all of the three most tweeted-about activities, aggregating the activities by the mean.
 	distance_vis_aggregated = {
 		"$schema": "https://vega.github.io/schema/vega-lite/v4.0.0-beta.8.json",
-	  "description": "A graph of the number of Tweets containing each type of activity.",
+		"description": "A graph of the number of Tweets containing each type of activity.",
+		"width": 400,
+		"height": 200, 
 	  "data": {
 			//"values": tweet_array
 			"values": dayOfWeekArray
 	  },
-
 		"mark": "point",
-  "encoding": {
-    "x": {
-      "field": "day",
-      "type": "ordinal",
-      "sort": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-      "axis": {"title": "day of the week"}
-    },
-    "y": {
-      "field": "distance",
-      "aggregate": "average",
-      "type": "quantitative"
-    },
-    "color": {
-      "field": "activity",
-      "type": "nominal",
-      "scale": {
-        "domain": ["running","walking","biking"],
-        "range": ["#e7ba52", "#c7c7c7", "#aec7e8"]
-      },
-      "legend": {"title": "Activity Type"}
-    }
-  }
+		"encoding": {
+			"x": {
+				"field": "day",
+				"type": "ordinal",
+				"sort": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+				"axis": {"title": "day of the week"}
+			},
+			"y": {
+				"field": "distance",
+				"aggregate": "average",
+				"type": "quantitative"
+			},
+			"color": {
+				"field": "activity",
+				"type": "nominal",
+				"scale": {
+					"domain": ["running","walking","biking"],
+					"range": ["#e7ba52", "#c7c7c7", "#aec7e8"]
+				},
+				"legend": {"title": "Activity Type"}
+			}
+		}
 	};
 	vegaEmbed('#distanceVisAggregated', distance_vis_aggregated, {actions:false});
+
+
 }
+
+
 
 //Wait for the DOM to load
 $(document).ready(function() {
 	loadSavedRunkeeperTweets().then(parseTweets);
+
+	/*
+		event handler for button using jQuery
+	*/
+	//$("#distanceVis").hide();
+	$("#distanceVisAggregated").hide();
+	$("#aggregate").click(function(event) {
+		console.log("clicked button!");
+		var elem = $(event.target);
+		if (elem.text()=="Show means") {
+			elem.text("Show all activities");
+			$("#distanceVis").hide();
+			$("#distanceVisAggregated").show();
+		} else if (elem.text()=="Show all activities") {
+			elem.text("Show means");
+			$("#distanceVis").show();
+			$("#distanceVisAggregated").hide();
+		}
+	});
+
 });
