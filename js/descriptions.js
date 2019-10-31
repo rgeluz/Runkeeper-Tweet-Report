@@ -1,3 +1,5 @@
+
+var writtenTweet_array = []; //global array used by multiple functions.
 function parseTweets(runkeeper_tweets) {
 	//Do not proceed if no tweets loaded
 	if(runkeeper_tweets === undefined) {
@@ -10,7 +12,7 @@ function parseTweets(runkeeper_tweets) {
 	tweet_array = runkeeper_tweets.map(function(tweet) {
 		return new Tweet(tweet.text, tweet.created_at);
 	});
-	let writtenTweet_array = [];
+	//let writtenTweet_array = [];
 	let tweetIndex = 1;
 	tweet_array.forEach(element => {
 		if(element.written) {
@@ -24,17 +26,35 @@ function parseTweets(runkeeper_tweets) {
 	});
 	console.log('writtenTweet_array: ');
 	console.log(writtenTweet_array);
-
+	console.log('');
 
 }
 
 function addEventHandlerForSearch() {
 	//TODO: Search the written tweets as text is entered into the search box, and add them to the table
 
+	//update searchText span
 	//console.log('search box event');
 	$('#searchText').text( $('#textFilter').val() );
-	//console.log($('#searchText').text())
+	let searchText = $('#searchText').text();
+	//console.log(searchText);
 
+	//test global array
+	//console.log('print global array: ');
+	/*writtenTweet_array.forEach(element => {
+		console.log(element);
+	});*/
+
+	//use filter on written tweet array. Filter on search text
+	let filtered_Array = writtenTweet_array.filter( element => {
+		if(element.tweet.includes(searchText)){
+				return element;
+		}
+
+	});
+	//console.log(filtered_Array);
+	//update search count
+	$('#searchCount').text(filtered_Array.length);
 
 }
 
@@ -45,5 +65,5 @@ $(document).ready(function() {
 	$('#textFilter').keypress(addEventHandlerForSearch());
 
 	loadSavedRunkeeperTweets().then(parseTweets);
-	
+
 });
