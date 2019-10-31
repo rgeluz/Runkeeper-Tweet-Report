@@ -29,6 +29,54 @@ class Tweet {
     }
 
     /*
+        extract hyperlink in tweettext
+        regex (http|https|ftp):\/\/([^\s]+)
+    */
+    get link():string {
+        let linkArray;
+        let linkArrayString:string = "";
+        linkArray = this.tweet_text.match(/(http|https|ftp):\/\/([^\s]+)/g);
+        if(linkArray!=null){
+            linkArray.forEach(element=> {
+                linkArrayString+=element.toString();
+            });
+        }
+        return linkArrayString;
+    }
+
+    /* 
+        wrap hyperlinke string with an anchor tag
+    */
+    get linkWithAnchorTag():string {
+        let linkString = this.link;
+        let formattedlink = '<a href="' +linkString+ '">'  +linkString+'</a>';
+        return formattedlink;
+    }
+
+    /*
+        get tweet text
+    */
+    get tweet_text():string {
+        return this.text;
+    }
+
+    /*
+        the takes all hyperlinks within the text
+        and wraps them with an anchor tag to make the hyperlink clickable.
+    */
+    get tweet_textWithClickableHyperlinks():string {
+        let tweet_text = this.tweet_text;
+        let linkString = this.link;
+        let linkWithAnchorTag = this.linkWithAnchorTag;
+        let formatted_text = "";
+
+        //convert hyperlinks into clickable hyperlinks
+        formatted_text = tweet_text.replace(linkString, linkWithAnchorTag);
+
+        return formatted_text;
+    }
+
+    /*
         returns a boolean, whether the text includes any content written by the person tweeting.
     */
     get written():boolean {
@@ -47,13 +95,15 @@ class Tweet {
         if(!this.written) {
             return "";
         }
-        //TODO: parse the written text from the tweet //TODO finish later
         //let userWrittenText = this.text.substr(0, this.text.indexOf(' - '));
         let userWrittenText = this.text.substring( this.text.indexOf(' - '), this.text.indexOf('https') );
         return userWrittenText;
         //return "";
     }
 
+    /*
+        get activity type for completed event
+    */
     get activityType():string {
         if (this.source != 'completed_event') {
             return "unknown";
@@ -102,6 +152,7 @@ class Tweet {
     }
 
     /*
+        get distance of activity
         //tested regex pattern at https://regex101.com
         regex: 
             (?<= a )(.*?)(?= mi )
@@ -112,7 +163,6 @@ class Tweet {
         if(this.source != 'completed_event') {
             return 0;
         }
-        //TODO: prase the distance from the text of the tweet
         let distanceArray;
         let distanceString: string ="";
         if(this.text.includes( ' mi ' )) {
@@ -147,6 +197,9 @@ class Tweet {
         return 0;
     }
 
+    /*
+        get dayType, either weekend or weekday
+    */
     get dayType():string {
         if(this.created_At.includes( 'Sat ') || 
            this.created_At.includes( 'Sun ' )) {
@@ -161,6 +214,9 @@ class Tweet {
         return "";
     }
 
+    /*
+        get the day from the tweet text
+    */
     get day():string {
         if(this.created_At.includes( 'Sat' )) {
             return "Sat";
@@ -181,6 +237,9 @@ class Tweet {
 
     }
 
+    /*
+        Did not implement this method. I decided to implement other functions. See above.
+    */
     getHTMLTableRow(rowNumber:number):string {
         //TODO: return a table row which summarizes the tweet with a clickable link to the RunKeeper activity
         return "<tr></tr>";

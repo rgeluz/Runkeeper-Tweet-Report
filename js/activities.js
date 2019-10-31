@@ -1,3 +1,7 @@
+
+/*
+	Once activityType and distance are calculated, they should be plotted with Vega-Lite
+*/
 function parseTweets(runkeeper_tweets) {
 	//Do not proceed if no tweets loaded
 	if(runkeeper_tweets === undefined) {
@@ -25,7 +29,7 @@ function parseTweets(runkeeper_tweets) {
 	activityTypeHashMap['workout'] = { count: 0, total_distance: 0};
 	activityTypeHashMap['freestyle'] = { count: 0, total_distance: 0};
 
-	
+	//Determining activity type and distance (2 points)
 	//get activity type counts and total distance
 	tweet_array.forEach(element => {
 			if(element.activityType==="running"){ 
@@ -201,6 +205,7 @@ function parseTweets(runkeeper_tweets) {
 	}
 
 	/*
+		Graphing activities by distance (2 points)
 		//vega-lite Plots for data visualization
 
 	*/
@@ -228,22 +233,31 @@ function parseTweets(runkeeper_tweets) {
 	console.log('');
 
 
-	
 	//first graph: A plot of how many of each type of activity exists in the dataset.
 	activity_vis_spec = {
 	  "$schema": "https://vega.github.io/schema/vega-lite/v4.0.0-beta.8.json",
 		"description": "A graph of the number of Tweets containing each type of activity.",
 		"width": 400,
-		"height": 200, 
+		"height": 400, 
 	  "data": {
 			//"values": tweet_array
 			"values": activityTypeArray
-	  },
-		//TODO: Add mark and encoding
+		},
+		"selection": {
+			"pts": {"type": "single", "on": "mouseover"}
+		},
 		"mark": "bar",
 		"encoding": {
 			"x": {"field": "activity", "type": "ordinal"},
-			"y": {"field": "count", "type": "quantitative"}
+			"y": {"field": "count", "type": "quantitative"},
+			"color": {
+				"condition": {
+					"selection": "pts",
+					"aggregate": "count", 
+					"type": "quantitative"
+				},
+				"value": "grey"
+			}
 		}
 	};
 	vegaEmbed('#activityVis', activity_vis_spec, {actions:false});
@@ -256,12 +270,18 @@ function parseTweets(runkeeper_tweets) {
 	distance_vis_spec = {
 		"$schema": "https://vega.github.io/schema/vega-lite/v4.0.0-beta.8.json",
 		"description": "A graph of the number of Tweets containing each type of activity.",
-		"width": 400,
-		"height": 200, 
+		"width": 700,
+		"height": 400, 
 	  "data": {
 			//"values": tweet_array
 			"values": dayOfWeekArray
-	  },
+		},
+		"selection": {
+			"paintbrush": {
+				"type": "multi",
+				"on": "mouseover", "empty": "all"
+			}
+		},
 		"mark": "point",
 		"encoding": {
 			"x": {
@@ -273,6 +293,12 @@ function parseTweets(runkeeper_tweets) {
 			"y": {
 				"field": "distance",
 				"type": "quantitative"
+			},
+			"size": {
+				"condition": {
+					"selection": "paintbrush", "value": 300
+				},
+				"value": 50
 			},
 			"color": {
 				"field": "activity",
@@ -291,12 +317,18 @@ function parseTweets(runkeeper_tweets) {
 	distance_vis_aggregated = {
 		"$schema": "https://vega.github.io/schema/vega-lite/v4.0.0-beta.8.json",
 		"description": "A graph of the number of Tweets containing each type of activity.",
-		"width": 400,
-		"height": 200, 
+		"width": 700,
+		"height": 400, 
 	  "data": {
 			//"values": tweet_array
 			"values": dayOfWeekArray
-	  },
+		},
+		"selection": {
+			"paintbrush": {
+				"type": "multi",
+				"on": "mouseover", "empty": "all"
+			}
+		},
 		"mark": "point",
 		"encoding": {
 			"x": {
@@ -309,6 +341,12 @@ function parseTweets(runkeeper_tweets) {
 				"field": "distance",
 				"aggregate": "average",
 				"type": "quantitative"
+			},
+			"size": {
+				"condition": {
+					"selection": "paintbrush", "value": 300
+				},
+				"value": 50
 			},
 			"color": {
 				"field": "activity",

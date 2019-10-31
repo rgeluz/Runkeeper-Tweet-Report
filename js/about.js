@@ -1,3 +1,7 @@
+
+/*
+	retrieve tweets and then compute statistics
+*/
 function parseTweets(runkeeper_tweets) {
 	//Do not proceed if no tweets loaded
 	if(runkeeper_tweets === undefined) {
@@ -5,6 +9,7 @@ function parseTweets(runkeeper_tweets) {
 		return;
 	} 
 
+	//retrieve tweets
 	tweet_array = runkeeper_tweets.map(function(tweet) {
 		return new Tweet(tweet.text, tweet.created_at);
 	});
