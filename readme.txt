@@ -12,6 +12,8 @@
 - 1/1 Implementing the search box
 - 2/2 Populating the table
 
+I also added some interactivity to the vegalite plots using selections from https://vega.github.io/vega-lite/docs/selection.html
+
 2. How long, in hours, did it take you to complete this assignment?
         It took me about 2 and half days.
 
