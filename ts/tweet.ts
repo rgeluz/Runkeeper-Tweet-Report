@@ -62,9 +62,9 @@ class Tweet {
         let textLowerCase = this.text.toLowerCase();
         //need to differentiate between "run" and "ski run" to get accurate counts
         if( textLowerCase.includes( ' run ' ) ) {  
-            if( !textLowerCase.includes( ' ski ' ) ) {
+            if( !textLowerCase.includes( ' ski ' )) {
                 return "running"; 
-            } else if ( textLowerCase.includes('ski run ' )) {
+            } else if ( textLowerCase.includes( 'ski run ' )) {
                 return "skiing";
             }
         }
@@ -83,6 +83,20 @@ class Tweet {
         else if( textLowerCase.includes( ' swim ' ) ) { return "swimming"; }
         else if( textLowerCase.includes( ' chair ride ' ) ) { return "chair riding"; }
         else if( textLowerCase.includes( ' yoga ') ){ return "yoga"; }
+        else if( textLowerCase.includes( ' workout' ) ) {
+            /*if( textLowerCase.includes('strength') ) {
+                return "strength workout";
+            } else if( textLowerCase.includes('elliptical')) {
+                return "elliptical workout";
+            } else if( textLowerCase.includes('crossfit')) {
+                return "crossfit workout";
+            } else if( textLowerCase.includes('spinning')) {
+                return "spinning workout";
+            } else if( textLowerCase.includes('bootcamp')) {
+                return "bootcomap workout";
+            }*/
+            return "workout";
+        } else if( textLowerCase.includes( ' freestyle ' ) ) { return "freestyle"; }
 
         return "";
     }

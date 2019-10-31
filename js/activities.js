@@ -22,6 +22,8 @@ function parseTweets(runkeeper_tweets) {
 	activityTypeHashMap['chair riding'] = { count: 0, total_distance: 0 };
 	activityTypeHashMap['skiing'] = { count: 0, total_distance: 0 };
 	activityTypeHashMap['yoga'] = { count: 0, total_distance: 0 };
+	activityTypeHashMap['workout'] = { count: 0, total_distance: 0};
+	activityTypeHashMap['freestyle'] = { count: 0, total_distance: 0};
 
 	
 	//get activity type counts and total distance
@@ -65,6 +67,14 @@ function parseTweets(runkeeper_tweets) {
 			else if(element.activityType==="yoga"){ 
 				activityTypeHashMap['yoga'].count++;
 				activityTypeHashMap['yoga'].total_distance+=element.distance;
+			} 
+			else if(element.activityType==="workout"){
+				activityTypeHashMap['workout'].count++;
+				activityTypeHashMap['workout'].total_distance+=element.distance;
+			}
+			else if(element.activityType==="freestyle"){
+				activityTypeHashMap['freestyle'].count++;
+				activityTypeHashMap['freestyle'].total_distance+=element.distance;
 			}
 	});
 
